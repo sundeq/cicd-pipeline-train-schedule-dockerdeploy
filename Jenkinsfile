@@ -35,9 +35,10 @@ pipeline {
             }
         }
         stage('DeployToProduction') {
-              when {
+            when {
                   branch 'master'
-              }
+            }
+            steps {
               input 'Deploy to production'
               milestone(1)
               withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
@@ -52,6 +53,7 @@ pipeline {
                       sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.prod_ip} \"docker run --restart always --name train-schedule-cool-app -p 8080:8080 -d micsnbricks/train-schedule-cool-app:${env.BUILD_NUMBER}\"" 
                   }
               }
+            }
         }
     }
 }
