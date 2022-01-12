@@ -42,7 +42,7 @@ pipeline {
               milestone(1)
               withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
                   script {
-                      sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.prod_ip} \ "docker pull micsnbricks:/train-schedule-cool-app:${env.BUILD_NUMBER}\"" 
+                      sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@${env.prod_ip} \"docker pull micsnbricks:/train-schedule-cool-app:${env.BUILD_NUMBER}\"" 
                       try {
                           sh "shpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@{env.prod_ip} \"docker stop train-schedule-cool-app\""
                           sh "shpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@{env.prod_ip} \"docker rm train-schedule-cool-app\""
